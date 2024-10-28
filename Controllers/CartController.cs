@@ -25,22 +25,22 @@ namespace BookStore.Controllers
 
         public IActionResult AddToCart(int id)
         {
-            var selectedBook = GetBookByID(id);
+            var selectedBook = GetBookById(id);
             if (selectedBook != null)
             {
                 _cart.AddToCart(selectedBook, 1);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Store");
         }
 
-        public Book GetBookByID(int id)
+        public Book GetBookById(int id)
         {
             return _context.Books.FirstOrDefault(b => b.Id == id);
         }
 
         public IActionResult RemoveFromCart(int id)
         {
-            var selectedBook = GetBookByID(id);
+            var selectedBook = GetBookById(id);
 
             if (selectedBook != null) 
             {
@@ -51,7 +51,7 @@ namespace BookStore.Controllers
 
         public IActionResult ReduceQuantity(int id)
         {
-            var selectedBook = GetBookByID(id);
+            var selectedBook = GetBookById(id);
 
             if (selectedBook != null)
             {
@@ -62,13 +62,20 @@ namespace BookStore.Controllers
 
         public IActionResult IncreaseQuantity(int id)
         {
-            var selectedBook = GetBookByID(id);
+            var selectedBook = GetBookById(id);
 
             if (selectedBook != null)
             {
-                _cart.AddToCart(selectedBook,1);
+                _cart.IncreaseQuantity(selectedBook);
             }
             return RedirectToAction("Index");
+        }
+
+        public IActionResult ClearCart()
+        {
+            _cart.ClearCart();
+
+            return RedirectToAction("Index"); 
         }
     }
 }

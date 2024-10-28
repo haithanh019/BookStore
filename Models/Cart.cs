@@ -84,23 +84,16 @@ namespace BookStore.Models
         {
             var cartItem = GetCartItem(book);
 
-            var remainingQuantity = 0;
 
             if (cartItem != null)
             {
-                if (cartItem.Quantity > 1)
-                {
-                    remainingQuantity = ++cartItem.Quantity;
-                }
-                else
-                {
-                    _context.CartItems.Remove(cartItem);
-                }
+                cartItem.Quantity++;
             }
             _context.SaveChanges();
-            return remainingQuantity;
+            return cartItem?.Quantity ?? 0;
         }
-         public void RemoveFromCart(Book book)
+
+        public void RemoveFromCart(Book book)
         {
             var cartItem = GetCartItem(book);
             if (cartItem != null)

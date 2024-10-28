@@ -1,4 +1,4 @@
-﻿@model BookStore.Models.Cart
+﻿@model BookStore.Models.Cart;
 
 <h1>Cart</h1>
 
@@ -14,43 +14,49 @@
                 <th>Remove</th>
             </tr>
         </thead>
-    <tbody>
-        @foreach(var item in Model.CartItems)
-        {
-            var bookTotal = item.Book.Price * item.Quantity;
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                var bookTotal = item.Book.Price * item.Quantity;
+                <tr>
+                    <td>
+                        <img src="@item.Book.ImageUrl" style="height: 4em" />
+                    </td>
+                    <td>
+                        @item.Book.Title
+                    </td>
+                    <td>
+                        @bookTotal.ToString("f")
+                    </td>
+                    <td>
+                        <a asp-action="IncreaseQuantity" asp-controller="Cart" asp-route-id="@item.Book.Id" class="btn btn-success"><i class="fa-solid fa-plus"></i></a>
+                        <span class="">@item.Quantity</span>
+                        <a asp-action="ReduceQuantity" asp-controller="Cart" asp-route-id="@item.Book.Id" class="btn btn-warning"><i class="fa-solid fa-minus"></i></a>
+                    </td>
+                    <td>
+                        <a asp-action="RemoveFromCart" asp-controller="Cart" asp-route-id="@item.Book.Id" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
             <tr>
-                <td>
-                    <img src="@item.Book.ImageUrl" style="height: 4em"/>
+                <td></td>
+                <td class="text-end">
+                    <strong>Total: </strong>
                 </td>
                 <td>
-                    @item.Book.Title
+                    <strong>@Model?.GetCartTotal().ToString("f")$</strong>
                 </td>
+                <td></td>
                 <td>
-                    @bookTotal.ToString("f")
-                </td>
-                <td>
-                        <a asp-action="IncreaseQuantity" asp-controller="CartController" asp-route-id="@item.Id" class="btn btn-success">+</a>
-                    @item.Quantity
-                        <a asp-action="ReduceQuantity" asp-controller="CartController" asp-route-id="@item.Id" class="btn btn-warning">-</a>
-                </td>
-                <td>
-                        <a asp-action="RemoveFromCart" asp-controller="CartController" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                    <a class="btn btn-success float-end clear-btn " asp-action="Checkout" asp-controller="Order" asp-route-id="@Model.Id"><i class="fa-solid fa-square-caret-right"></i>  Checkout</a>
+
                 </td>
             </tr>
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <td></td>
-            <td class="text-end">
-                <strong>Total: </strong>
-            </td>
-            <td>
-                <strong>@Model?.GetCartTotal().ToString("f")$</strong>
-            </td>
+            <a class="btn btn-dark float-end clear-btn " asp-action="ClearCart" asp-controller="Cart" asp-route-id="@Model.Id"><i class="fa-solid fa-cart-arrow-down"></i>  Clear All</a>
 
-        </tr>
-    </tfoot>
+        </tfoot>
     </table>
 
 }
