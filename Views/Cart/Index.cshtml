@@ -1,0 +1,60 @@
+﻿@model BookStore.Models.Cart
+
+<h1>Cart</h1>
+
+@if (Model.CartItems.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Book</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+    <tbody>
+        @foreach(var item in Model.CartItems)
+        {
+            var bookTotal = item.Book.Price * item.Quantity;
+            <tr>
+                <td>
+                    <img src="@item.Book.ImageUrl" style="height: 4em"/>
+                </td>
+                <td>
+                    @item.Book.Title
+                </td>
+                <td>
+                    @bookTotal.ToString("f")
+                </td>
+                <td>
+                        <a asp-action="IncreaseQuantity" asp-controller="CartController" asp-route-id="@item.Id" class="btn btn-success">+</a>
+                    @item.Quantity
+                        <a asp-action="ReduceQuantity" asp-controller="CartController" asp-route-id="@item.Id" class="btn btn-warning">-</a>
+                </td>
+                <td>
+                        <a asp-action="RemoveFromCart" asp-controller="CartController" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td class="text-end">
+                <strong>Total: </strong>
+            </td>
+            <td>
+                <strong>@Model?.GetCartTotal().ToString("f")$</strong>
+            </td>
+
+        </tr>
+    </tfoot>
+    </table>
+
+}
+else
+{
+    <h3 class="text-center">Cart is empty</h3>
+}
