@@ -49,6 +49,12 @@
                     @Html.DisplayFor(model => model.Price)
                 </dd>
                 <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Genre)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Genre)
+                </dd>
+                <dt class="col-sm-3">
                     @Html.DisplayNameFor(model => model.ImageUrl)
                 </dt>
                 <dd class="col-sm-9">
@@ -65,7 +71,7 @@
 
         <div>
             <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary float-end store-btn"><i class="fa-solid fa-pen-to-square"></i></a>
-            <a asp-action="Index" class="btn btn-warning "><i class="fa-solid fa-left-long"></i> Back</a>
+            <a asp-action="Index" class="btn btn-warning float-end"><i class="fa-solid fa-left-long"></i> Back</a>
         </div>
     </div>
     <div class="col-6">

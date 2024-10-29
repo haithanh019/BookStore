@@ -22,6 +22,7 @@ namespace BookStore.Models
 
         public string? Author { get; set; }
 
+        public string? Genre { get; set; }
 
         [Required, DataType(DataType.Currency)]
         public float Price { get; set; }
