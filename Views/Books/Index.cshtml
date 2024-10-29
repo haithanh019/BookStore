@@ -45,7 +45,7 @@
                 @Html.DisplayNameFor(model => model.Genre)
             </th>
             <th>
-                Has Image
+                Image
             </th>
             <th></th>
         </tr>
@@ -76,7 +76,7 @@
                     @Html.DisplayFor(modelItem => item.Genre)
                 </td>
                 <td>
-                    <i class="@HasImage(item)"></i>
+                    <img src="@item.ImageUrl" class="" style="height:50px; width:30px" />
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a> |

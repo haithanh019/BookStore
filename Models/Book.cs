@@ -30,5 +30,6 @@ namespace BookStore.Models
         [Required, Display(Name = "Image URL")]
         public string? ImageUrl { get; set; }
 
+
     }
 }

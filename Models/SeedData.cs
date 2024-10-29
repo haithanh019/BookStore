@@ -18,6 +18,7 @@ namespace BookStore.Models
                 }
 
                 context.Books.AddRange(
+
                     new Book
                     {
                         Title = "Bröderna Lejonhjärta",
@@ -26,6 +27,7 @@ namespace BookStore.Models
                         DatePublished = DateTime.Parse("2013-9-26"),
                         Price = 139,
                         Author = "Astrid Lindgren",
+                        Genre = "Fantasy, Adventure",
                         ImageUrl = "/images/lejonhjärta.jpg"
                     },
 
@@ -37,6 +39,7 @@ namespace BookStore.Models
                         DatePublished = DateTime.Parse("1991-7-4"),
                         Price = 100,
                         Author = "J. R. R. Tolkien",
+                        Genre = "Fantasy, Adventure",
                         ImageUrl = "/images/lotr.jpg"
                     },
 
@@ -48,6 +51,7 @@ namespace BookStore.Models
                         DatePublished = DateTime.Parse("2011-6-1"),
                         Price = 91,
                         Author = "Dennis Lehane",
+                        Genre = "Crime/Thriller",
                         ImageUrl = "/images/mystic-river.jpg"
                     },
 
@@ -59,6 +63,7 @@ namespace BookStore.Models
                         DatePublished = DateTime.Parse("1994-1-2"),
                         Price = 166,
                         Author = "John Steinbeck",
+                        Genre = "Drama/Tragedy",
                         ImageUrl = "/images/of-mice-and-men.jpg"
                     },
 
@@ -70,6 +75,7 @@ namespace BookStore.Models
                         DatePublished = DateTime.Parse("1994-8-18"),
                         Price = 84,
                         Author = "Ernest Hemingway",
+                        Genre = "Literary Fiction",
                         ImageUrl = "/images/old-man-and-the-sea.jpg"
                     },
 
@@ -81,11 +87,19 @@ namespace BookStore.Models
                         DatePublished = DateTime.Parse("2007-5-1"),
                         Price = 95,
                         Author = "Cormac McCarthy",
+                        Genre = "Post-apocalyptic Fiction",
                         ImageUrl = "/images/the-road.jpg"
                     }
                 );
 
+
+               
+
+
+
+
                 context.SaveChanges();
+
             }
         }
     }

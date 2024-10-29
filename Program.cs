@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using BookStore.Data;
 using BookStore.Models;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<BookStoreContext>(options =>
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 
 builder.Services.AddScoped<Cart>(sp => Cart.GetCart(sp));
 
