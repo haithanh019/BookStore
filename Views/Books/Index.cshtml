@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
     string HasImage(Book book)
     {
-        if (book.ImageUrl != "" && book.ImageUrl != null)
+        if (!string.IsNullOrEmpty(book.ImageUrl))
         {
             return "fa-solid fa-check";
         }
@@ -18,13 +18,24 @@
 <h1>Book list</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary"><i class="fa-solid fa-book"></i> Add Book</a>
+    <a asp-action="Create" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Book</a>
 </p>
+
+<p>
+    @using (Html.BeginForm("Index", "Books", FormMethod.Get))
+    {
+    <p>
+        Find by name: @Html.TextBox("searchString", ViewData["CurrentFilter"] as string)
+        <input type="submit" value="Search" class="btn btn-secondary" />
+    </p>
+    }
+</p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.TitleSortParm" asp-route-searchString="@ViewData["CurrentFilter"]">Title</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Author)
@@ -36,7 +47,7 @@
                 @Html.DisplayNameFor(model => model.ISBN)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DatePublished)
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.DateSortParm" asp-route-searchString="@ViewData["CurrentFilter"]">Date Published</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
@@ -76,7 +87,7 @@
                     @Html.DisplayFor(modelItem => item.Genre)
                 </td>
                 <td>
-                    <img src="@item.ImageUrl" class="" style="height:50px; width:30px" />
+                    <img src="@item.ImageUrl" alt="Book Image" style="height:50px; width:30px" />
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a> |

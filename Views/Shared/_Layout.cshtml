@@ -29,9 +29,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Index">Store</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListAllRole">Role</a>
+                        </li>
                     </ul>
+                    <partial name="_LoginPartial" />
                     <a class="nav-link text-dark float-end " asp-area="" asp-controller="Cart" asp-action="Index"><i class="fa-solid fa-cart-shopping"></i></i></a>
-
+                    
                 </div>
             </div>
         </nav>

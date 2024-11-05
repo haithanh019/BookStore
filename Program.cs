@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using BookStore.Data;
 using BookStore.Models;
-using System.Configuration;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,12 +11,19 @@ builder.Services.AddDbContext<BookStoreContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BookStoreContext")
         ?? throw new InvalidOperationException("Connection string 'BookStoreContext' not found.")));
 
+builder.Services.AddRazorPages();
+
+// Register Identity with DefaultUser and the Entity Framework store
+builder.Services.AddDefaultIdentity<DefaultUser>().AddRoles<IdentityRole>() .AddEntityFrameworkStores<BookStoreContext>();
+
 builder.Services.AddDistributedMemoryCache();
+
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+// Register the cart as scoped service
+builder.Services.AddScoped(sp => Cart.GetCart(sp));
 
-builder.Services.AddScoped<Cart>(sp => Cart.GetCart(sp));
-
+// Configure session middleware
 builder.Services.AddSession(op =>
 {
     op.Cookie.HttpOnly = true;
@@ -61,10 +68,15 @@ app.UseRouting();
 
 app.UseSession(); // Ensure session middleware is registered here
 
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+    endpoints.MapRazorPages();
+});
 
 app.Run();

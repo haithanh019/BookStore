@@ -1,0 +1,7 @@
+﻿@{
+    var errorMessage = ViewData["ErrorMessage"];
+}
+
+<h2>@errorMessage</h2>
+<h5 class="text-danger">Click the button to return Home page</h5>
+<a asp-action="Index" asp-controller="Home" class="btn btn-primary"> Home</a>

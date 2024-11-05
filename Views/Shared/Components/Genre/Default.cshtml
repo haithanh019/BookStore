@@ -1,0 +1,10 @@
+﻿@model IEnumerable<string>
+
+<div class="list-group">
+    @foreach (var genre in Model)
+    {
+        <a href="@Url.Action("BooksByGenre", "Store", new { genre = genre })" class="list-group-item list-group-item-action">
+            @genre
+        </a>
+    }
+</div>
