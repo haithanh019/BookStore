@@ -8,8 +8,16 @@ using Microsoft.EntityFrameworkCore;
 using BookStore.Data;
 using BookStore.Models;
 
+using X.PagedList;
+using Microsoft.AspNetCore.Authorization;
+
+
+
+
 namespace BookStore.Controllers
+
 {
+    [Authorize(Roles = "Admin")]
     public class BooksController : Controller
     {
         private readonly BookStoreContext _context;
@@ -19,7 +27,6 @@ namespace BookStore.Controllers
             _context = context;
         }
 
-        // GET: Books
         // GET: Books
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
@@ -31,7 +38,7 @@ namespace BookStore.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                books = books.Where(b => b.Title.Contains(searchString) || b.Author.Contains(searchString));
+                books = books.Where(b => b.Title.Contains(searchString));
             }
 
             switch (sortOrder)
@@ -51,7 +58,9 @@ namespace BookStore.Controllers
             }
 
             return View(await books.AsNoTracking().ToListAsync());
+
         }
+
 
 
         // GET: Books/Details/5

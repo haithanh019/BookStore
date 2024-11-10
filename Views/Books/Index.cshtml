@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<BookStore.Models.Book>
 
+
+
 @{
     ViewData["Title"] = "Index";
     string HasImage(Book book)
@@ -25,7 +27,7 @@
     @using (Html.BeginForm("Index", "Books", FormMethod.Get))
     {
     <p>
-        Find by name: @Html.TextBox("searchString", ViewData["CurrentFilter"] as string)
+        Find by title: @Html.TextBox("searchString", ViewData["CurrentFilter"] as string)
         <input type="submit" value="Search" class="btn btn-secondary" />
     </p>
     }
@@ -38,22 +40,22 @@
                 <a asp-action="Index" asp-route-sortOrder="@ViewBag.TitleSortParm" asp-route-searchString="@ViewData["CurrentFilter"]">Title</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Author)
+                @Html.DisplayNameFor(model => model.First().Author)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Language)
+                @Html.DisplayNameFor(model => model.First().Language)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ISBN)
+                @Html.DisplayNameFor(model => model.First().ISBN)
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewBag.DateSortParm" asp-route-searchString="@ViewData["CurrentFilter"]">Date Published</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.First().Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Genre)
+                @Html.DisplayNameFor(model => model.First().Genre)
             </th>
             <th>
                 Image

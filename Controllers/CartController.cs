@@ -1,9 +1,11 @@
 ﻿using BookStore.Data;
 using BookStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly BookStoreContext _context;
@@ -15,7 +17,7 @@ namespace BookStore.Controllers
             _cart = cart;
             _context = context;
         }
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var items = _cart.GetAllCartItems();

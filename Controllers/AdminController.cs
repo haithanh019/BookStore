@@ -1,10 +1,13 @@
 ﻿using BookStore.Models;
 using BookStore.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace BookStore.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -107,6 +110,39 @@ namespace BookStore.Controllers
             }
 
 
+        }
+
+        [HttpGet] 
+        public async Task<IActionResult> EditUserInRole(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+
+            ViewData["roleId"] = id;
+            ViewData["roleName"] = role.Name;
+            if (role == null)
+            {
+                ViewData["ErrorMessage"] = $"No role with Id '{id}' was found";
+                return View("Error");
+            }
+            var model = new List<UserRoleViewModel>();
+            foreach(var user in _userManager.Users)
+            {
+                UserRoleViewModel roleViewModel = new()
+                {
+                    Id = user.Id,
+                    Name = user.UserName
+                };
+                if (await _userManager.IsInRoleAsync(user, role.Name))
+                {
+                    roleViewModel.IsSelected = true;
+                }
+                else
+                {
+                    roleViewModel.IsSelected = false;
+                }
+                model.Add(roleViewModel);
+            }
+            return View(model);
         }
     }
 }

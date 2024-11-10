@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using BookStore.Data;
 using BookStore.Models;
 using Microsoft.AspNetCore.Identity;
+using BookStore.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +16,9 @@ builder.Services.AddDbContext<BookStoreContext>(options =>
 builder.Services.AddRazorPages();
 
 // Register Identity with DefaultUser and the Entity Framework store
-builder.Services.AddDefaultIdentity<DefaultUser>().AddRoles<IdentityRole>() .AddEntityFrameworkStores<BookStoreContext>();
+builder.Services.AddDefaultIdentity<DefaultUser>(op => op.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>() .AddEntityFrameworkStores<BookStoreContext>();
+
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Services.AddDistributedMemoryCache();
 
@@ -43,8 +47,9 @@ using (var scope = app.Services.CreateScope())
     var context = services.GetRequiredService<BookStoreContext>();
     try
     {
-        SeedData.Initialize(services);
-        context.Database.EnsureCreated();
+        //SeedData.Initialize(services);
+        UserRoleInitializer.InitializeAsync(services).Wait();
+
     }
     catch (Exception ex)
     {
